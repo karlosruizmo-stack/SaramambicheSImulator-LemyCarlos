@@ -1,27 +1,9 @@
-import java.util.ArrayList;
-
 public class Usuario {
     private String nomUser;
-    private ArrayList<Partida> party;
+    private Partida partidaActual; // Solo la que se está jugando o la última
 
-    public Usuario(String nomUser) {
+    public Usuario(String nomUser, Partida partidaActual) {
         this.nomUser = nomUser;
-        this.party = new ArrayList<>();
-    }
-
-    public String getNomUser() {
-        return nomUser;
-    }
-
-    public void setNomUser(String nomUser) {
-        this.nomUser = nomUser;
-    }
-
-    public ArrayList<Partida> getParty() {
-        return party;
-    }
-
-    public void setParty(ArrayList<Partida> party) {
-        this.party = party;
+        this.partidaActual = new Partida(0,0,20/04/2026);
     }
 }
