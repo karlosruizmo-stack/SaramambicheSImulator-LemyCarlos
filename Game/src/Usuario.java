@@ -1,9 +1,12 @@
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class Usuario {
     private String nomUser;
-    private Partida partidaActual; // Solo la que se está jugando o la última
+    private ArrayList<Partida> partida; // Solo la que se está jugando o la última
 
-    public Usuario(String nomUser, Partida partidaActual) {
+    public Usuario(String nomUser) {
         this.nomUser = nomUser;
-        this.partidaActual = new Partida(0,0,20/04/2026);
+        this.partida = new ArrayList<>();
     }
 }
