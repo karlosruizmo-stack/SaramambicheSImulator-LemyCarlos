@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Controlador {
     private Partida partidas;
     // de array a .txt
-    public  void guardarEnArchivo(ArrayList<Partida> p1, Partida p3) {
+    public  void guardarEnArchivo(ArrayList<Partida> p1) {
         try (java.io.FileWriter fw = new java.io.FileWriter("Partida.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo
             for (Partida l : p1) {
                 fw.write(l.getIdPartida() + "," + l.getPuntuación() + "," + l.getFecha() + "\n");
