@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class Controlador {
 
     // de array a .txt
-    public  void guardarEnArchivo(ArrayList<Personaje> p1) {
+    public  void guardarEnArchivo(ArrayList<Usuario> p1) {
         try (java.io.FileWriter fw = new java.io.FileWriter("usuarios.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo
-            for (Personaje l : p1) {
+            for (Usuario l : p1) {
                 fw.write(l.getTitulo() + "," + l.getAutor() + "," + l.getAnioPubli() + "\n");
             }
         } catch (Exception e) {
@@ -15,7 +15,7 @@ public class Controlador {
         }
     }
     // de .txt al array
-    public  void cargarDesdeArchivo(ArrayList<Personaje> p2) {
+    public  void cargarDesdeArchivo(ArrayList<Usuario> p2) {
         File archivo = new File("usuarios.txt");
         if (!archivo.exists()) return;
 
@@ -25,7 +25,7 @@ public class Controlador {
                 String[] partes = linea.split(","); // Dividimos por la coma
                 if (partes.length == 3) {
                     // Creamos el objeto y lo metemos al array
-                    p2.add(new Pe(partes[0], partes[1], Integer.parseInt(partes[2])));
+                    p2.add(new Usuario(partes[0], partes[1], Integer.parseInt(partes[2])));
                 }
             }
         } catch (Exception e) {
