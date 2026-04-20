@@ -1,8 +1,8 @@
 import java.time.LocalDateTime;
 
 public class Partida {
-    private int idPartida;
-    private int puntuación;
+    private int idPartida; //Registro de partida
+    private int puntuación; //Cantidad de puntos obtenida
     private String resultado; // Ej: "Victoria", "Derrota"
     private LocalDateTime fecha;
 

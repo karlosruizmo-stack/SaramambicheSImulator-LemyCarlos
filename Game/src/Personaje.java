@@ -7,7 +7,6 @@ public class Personaje {
         this.nombre = nombre;
         this.hp = hp;
         this.fuerza = fuerza;
-
     }
 
     // Usamos getters y llamamos al controlador
