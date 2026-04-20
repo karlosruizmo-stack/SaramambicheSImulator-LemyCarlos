@@ -18,7 +18,7 @@ public class ControladorPers {
         baki.setFuerza(baki.getFuerza() + masFuerza);
         baki.setHp(baki.getHp() + masVida);
 
-        System.out.println("¡EL CAMINO A LA FUERZA SE HACE MÁS CORTO!");
+        System.out.println("EL CAMINO A LA FUERZA SE HACE MÁS CORTO");
         System.out.println("Fuerza +" + masFuerza + " | Vida +" + masVida);
     }
 
