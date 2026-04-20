@@ -1,55 +1,48 @@
 import java.io.*;
-import java.util.ArrayList;
 
 public class ControladorPers {
-    // Lista donde guardaremos a los personajes cargados desde el fichero
-    private ArrayList<Personaje> listaPersonajes;
-    private String rutaArchivo = "personajes.txt";
+    private Personaje baki;
+    private int recordPuntuacion;
+    private String rutaRecord = "record.txt";
 
-    public ControladorPers() {
-        this.listaPersonajes = new ArrayList<>();
-        cargarPersonajes(); // Intentamos cargar al iniciar el controlador
+    public ControladorPers() { //Establecemos las stats predefinidas on las que comienza el jugador
+        this.baki = new Personaje("Baki Hanma", 150, 30, 20);
+        this.recordPuntuacion = cargarRecord();
     }
 
-    // MÉTODO CLAVE: Lee el fichero y crea los objetos Personaje
-    public void cargarPersonajes() {
-        // Usamos try-with-resources para que el archivo se cierre solo (Requisito: Try-Catch)
-        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                // Suponemos formato: Nombre,HP,Fuerza,Defensa
-                String[] partes = linea.split(",");
-                if (partes.length == 4) {
-                    String nombre = partes[0];
-                    int hp = Integer.parseInt(partes[1].trim());
-                    int fuerza = Integer.parseInt(partes[2].trim());
-                    int defensa = Integer.parseInt(partes[3].trim());
+    // Despues de cada combate las stats augmentan aleatoriamente
+    public void evolucionAleatoria() {
+        int masFuerza = (int) (Math.random() * 10) + 1;
+        int masVida = (int) (Math.random() * 15) + 5;
 
-                    // Creamos el modelo y lo añadimos a la lista
-                    listaPersonajes.add(new Personaje(nombre, hp, fuerza, defensa));
-                }
+        baki.setFuerza(baki.getFuerza() + masFuerza);
+        baki.setHp(baki.getHp() + masVida);
+
+        System.out.println("¡EL CAMINO A LA FUERZA SE HACE MÁS CORTO!");
+        System.out.println("Fuerza +" + masFuerza + " | Vida +" + masVida);
+    }
+
+    // Pedimos al programa que guarde la puntuación obtenido pero no las stats para que no se junten los archivos para futurs partidas
+    public void guardarNuevoRecord(int puntuacionPartida) {
+        if (puntuacionPartida > recordPuntuacion) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter(rutaRecord))) {
+                writer.println(puntuacionPartida);
+                this.recordPuntuacion = puntuacionPartida;
+                System.out.println("¡Nuevo record");
+            } catch (IOException e) {
+                System.err.println("Error al guardar récord: " + e.getMessage());
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: No se encontró el archivo " + rutaArchivo);
-        } catch (IOException e) {
-            System.err.println("Error al leer el archivo de personajes.");
-        } catch (NumberFormatException e) {
-            System.err.println("Error: Hay un dato numérico mal escrito en el fichero.");
+        }
+    }
+
+    private int cargarRecord() {
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaRecord))) {
+            return Integer.parseInt(br.readLine().trim());
+        } catch (Exception e) {
+            return 0; // Si el programa no encuentra ningun archivo se incia de 0
         }
     }
 
-    // Método para buscar un personaje por nombre (ej: para elegir a Yujiro)
-    public Personaje buscarPersonaje(String nombre) {
-        for (Personaje p : listaPersonajes) {
-            if (p.getNombre().equalsIgnoreCase(nombre)) {
-                return p;
-            }
-        }
-        return null; // Si no lo encuentra
-    }
-
-    // Getter para que el Main pueda ver la lista
-    public ArrayList<Personaje> getListaPersonajes() {
-        return listaPersonajes;
-    }
+    public Personaje getBaki() { return baki; }
+    public int getRecordPuntuacion() { return recordPuntuacion; }
 }
