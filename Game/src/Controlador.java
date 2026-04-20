@@ -5,7 +5,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Controlador {
-    private Partida partidas;
+    private Vista vista;
+
+    public Controlador(Vista vista) {
+        this.vista = vista;
+    }
+
     // de array a .txt
     public void guardarEnArchivo(ArrayList<Partida> p1) {
         try (java.io.FileWriter fw = new java.io.FileWriter("Partida.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo

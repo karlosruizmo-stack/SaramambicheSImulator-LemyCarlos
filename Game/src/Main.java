@@ -1,6 +1,8 @@
 public class Main {
     static void main(String[] args) {
-        Usuario user= new Usuario("");
+        Vista vista = new Vista();
+        Usuario user = new Usuario("");
 
+        Controlador guardarpartida = new Controlador(vista);
     }
 }
