@@ -1,15 +1,22 @@
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Controlador {
-    public static void guardarEnArchivo(ArrayList<Libro> lista) {
-        try (java.io.FileWriter fw = new java.io.FileWriter("libros.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo
-            for (Libro l : lista) {
+
+    // de array a .txt
+    public  void guardarEnArchivo(ArrayList<Personajes> lista) {
+        try (java.io.FileWriter fw = new java.io.FileWriter("usuarios.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo
+            for (Personajes l : lista) {
                 fw.write(l.getTitulo() + "," + l.getAutor() + "," + l.getAnioPubli() + "\n");
             }
         } catch (Exception e) {
             System.out.println("Error al guardar: " + e.getMessage());
         }
     }
-    public static void cargarDesdeArchivo(ArrayList<Libro> lista) {
-        File archivo = new File("libros.txt");
+    // de .txt al array
+    public  void cargarDesdeArchivo(ArrayList<Libro> lista) {
+        File archivo = new File("usuarios.txt");
         if (!archivo.exists()) return;
 
         try (Scanner lector = new Scanner(archivo)) {
