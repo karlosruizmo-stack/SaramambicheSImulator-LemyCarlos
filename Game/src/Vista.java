@@ -14,7 +14,7 @@ public class Vista {
     }
 
     public void mostrarMensaje(String m) { System.out.println(m); }
-    
+
     public int pedirEntero(String mensaje) {
         System.out.print(mensaje);
         int op = sc.nextInt();
