@@ -4,9 +4,9 @@ public class Usuario {
     private String nomUser;
     private ArrayList<Partida> party;
 
-    public Usuario(String nomUser, ArrayList<Partida> party) {
+    public Usuario(String nomUser) {
         this.nomUser = nomUser;
-        this.party = party;
+        this.party = new ArrayList<>();
     }
 
     public String getNomUser() {

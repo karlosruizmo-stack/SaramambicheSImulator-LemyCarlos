@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Controlador {
     private Partida partidas;
     // de array a .txt
-    public  void guardarEnArchivo(ArrayList<Partida> p1) {
+    public void guardarEnArchivo(ArrayList<Partida> p1) {
         try (java.io.FileWriter fw = new java.io.FileWriter("Partida.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo
             for (Partida l : p1) {
                 fw.write(l.getIdPartida() + "," + l.getPuntuación() + "," + l.getFecha() + "\n");
@@ -18,7 +18,7 @@ public class Controlador {
     }
     // de .txt al array
 
-    public  void cargarDesdeArchivo(ArrayList<Partida> p2) {
+    public void cargarDesdeArchivo(ArrayList<Partida> p2) {
         File archivo = new File("partida.txt");
         if (!archivo.exists()) return;
         DateTimeFormatter formateador = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -35,6 +35,17 @@ public class Controlador {
             }
         } catch (Exception e) {
             System.out.println("Error al cargar: " + e.getMessage());
+        }
+    }
+
+    public void leerArchivo2(){
+        File archivoF = new File("partida.txt");
+        if (!archivoF.exists()) return;
+        try (Scanner lector = new Scanner(archivoF)){
+            String linea = lector.nextLine();
+            System.out.println(linea);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
