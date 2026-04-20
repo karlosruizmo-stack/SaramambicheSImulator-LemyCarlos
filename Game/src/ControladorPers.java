@@ -35,7 +35,7 @@ public class ControladorPers {
 
     // Se llama al morir o salir para ver si superamos el record
     public void finalizarPartida() {
-        System.out.println("\n--- RESUMEN DE LA SESIÓN ---");
+        System.out.println(" Resumen de la Sesión ");
         System.out.println("Puntos totales: " + this.puntuacionActual);
 
         if (this.puntuacionActual > recordPuntuacion) {
