@@ -8,7 +8,7 @@ public class ControladorPers {
 
     public ControladorPers() {
         // Establecemos las stats predefinidas con las que comienza el jugador
-        this.baki = new Personaje("Baki Hanma", 150, 30, 20);
+        this.baki = new Personaje("Baki Hanma", 150, 30,);
         this.recordPuntuacion = cargarRecord();
         this.puntuacionActual = 0;
     }
