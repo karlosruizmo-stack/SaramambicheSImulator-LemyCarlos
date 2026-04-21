@@ -53,13 +53,10 @@ public class ControladorJuego {
         controlLogs.guardarEnArchivo(historialPartidas);
         vista.mostrarMensaje("Saliendo... Progreso guardado.");
     }
-
+    // METODO PRINCIPAL(TURNO JUGADOR Y TURNO ENEMIGO) --> REGISTRAR VICTORIA -->FINDEPARTIDA();
     private void flujoCombate() {
         generarEnemigo();
         vista.mostrarInicioCombate(enemigoActual.getNombre());
-
-        // BORRAMOS: contadorAtaquesBasicos = 0;
-        // Al quitar esa línea, el contador se mantiene de una pelea a otra.
 
         while (jugador.estaVivo() && enemigoActual.estaVivo()) {
             ejecutarTurnoJugador();
@@ -81,16 +78,13 @@ public class ControladorJuego {
         puntuacionActual += 100;
         vista.victoria(100);
 
-        // MEJORA 1: Curación aleatoria (ejemplo: entre 20 y 50 de vida)
+        // Curación aleatoria (ejemplo: entre 20 y 50 de vida)
         int curacion = (int) (Math.random() * 31) + 20;
         int nuevaVida = jugador.getHp() + curacion;
 
-        // Evitamos que la vida supere el máximo inicial (ej. 150)
         if (nuevaVida > 150) nuevaVida = 150;
 
         jugador.setHp(nuevaVida);
-
-        // MEJORA 2: Aumento de fuerza
         jugador.setFuerza(jugador.getFuerza() + 5);
 
         vista.mostrarMensaje("Baki descansa. Recupera " + curacion + " HP. Nueva fuerza: " + jugador.getFuerza());
@@ -109,7 +103,7 @@ public class ControladorJuego {
             vista.mostrarMensaje("¡NUEVO RÉCORD REGISTRADO: " + recordPuntuacion + "!");
         }
 
-        // Guardamos todo el historial al archivo
+        // Guardamos todo el historial
         controlLogs.guardarEnArchivo(historialPartidas);
 
         //RESET
@@ -130,14 +124,13 @@ public class ControladorJuego {
             contadorAtaquesBasicos++;
 
         } else if (accion == 2 && contadorAtaquesBasicos >= 2) {
-            // Ataque Especial (Solo si tiene carga)
+            // Ataque Especial
             int danoEspecial = jugador.getFuerza() * 2;
             enemigoActual.recibirDaño(danoEspecial);
             vista.infoAtaque(jugador.getNombre(), "Técnica Especial", danoEspecial);
             contadorAtaquesBasicos = 0; // Reset
 
         } else {
-            // Si elige el especial sin carga o una opción inválida
             vista.mostrarMensaje("Fallo en la ejecución. Pierdes el ritmo.");
         }
     }
