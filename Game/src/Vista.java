@@ -47,6 +47,14 @@ public class Vista {
     public void mostrarMensaje(String m) { System.out.println(m); }
 
     public void mostrarLogs(ArrayList<Partida> historialPartidas) {
+        System.out.println("\n--- HISTORIAL DE PARTIDAS ---");
+        if (historialPartidas.isEmpty()) {
+            System.out.println("No hay partidas registradas aún.");
+        } else {
+            for (Partida p : historialPartidas) {
+                System.out.println("ID: " + p.getIdPartida() + " | Puntos: " + p.getPuntuación() + " | Fecha: " + p.getFecha());
+            }
+        }
     }
 }
  
