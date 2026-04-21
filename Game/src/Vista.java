@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Vista {
@@ -44,5 +45,8 @@ public class Vista {
     }
 
     public void mostrarMensaje(String m) { System.out.println(m); }
+
+    public void mostrarLogs(ArrayList<Partida> historialPartidas) {
+    }
 }
  
