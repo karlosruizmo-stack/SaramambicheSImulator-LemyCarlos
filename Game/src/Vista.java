@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class Vista {
@@ -14,6 +15,17 @@ public class Vista {
     }
 
     public void mostrarMensaje(String m) { System.out.println(m); }
+    
+    public void mostrarLogs(){
+        File archivoF = new File("partida.txt");
+        if (!archivoF.exists()) return;
+        try (Scanner lector = new Scanner(archivoF)){
+            String linea = lector.nextLine();
+            System.out.println(linea);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public int pedirEntero(String mensaje) {
         System.out.print(mensaje);

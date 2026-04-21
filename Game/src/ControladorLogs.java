@@ -43,14 +43,5 @@ public class ControladorLogs {
             }
         }
 
-        public void leerArchivo2(){
-            File archivoF = new File("partida.txt");
-            if (!archivoF.exists()) return;
-            try (Scanner lector = new Scanner(archivoF)){
-                String linea = lector.nextLine();
-                System.out.println(linea);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+
     }
