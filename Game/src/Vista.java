@@ -6,7 +6,7 @@ public class Vista {
     Scanner sc = new Scanner(System.in);
 
     public int mostrarMenuPrincipal() {
-        System.out.println("\n--- BAKI RPG: THE ULTIMATE FIGHTER ---");
+        System.out.println("\n--- SARAMAMBICHE RPG: THE ULTIMATE FIGHTER ---");
         System.out.println("1. Buscar pelea (Auto-Battle)");
         System.out.println("2. Ver estadísticas de Baki");
         System.out.println("0. Salir");
@@ -17,7 +17,7 @@ public class Vista {
     }
 
     public void mostrarInicioCombate(String oponente) {
-        System.out.println("\n[!] ¡Un salvaje " + oponente + " ha aparecido!");
+        System.out.println("\n[!] ¡Un saramambiche " + oponente + " ha aparecido!");
     }
 
     public void mostrarEstado(Personaje p1, Personaje p2) {
@@ -28,7 +28,7 @@ public class Vista {
     }
 
     public void infoAtaque(String atacante, String tipo, int dano) {
-        String decoracion = tipo.equals("ESPECIAL") ? "🔥🔥 [CRÍTICO] 🔥🔥" : "->";
+        String decoracion = tipo.equals("ESPECIAL") ? " [CRÍTICO] " : "->";
         System.out.println(decoracion + " " + atacante + " usa " + tipo + " y causa " + dano + " de daño.");
     }
 
