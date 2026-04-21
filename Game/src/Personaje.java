@@ -18,15 +18,11 @@ public class Personaje {
     }
 
     public void recibirDaño(int cantidad) {
-        // El daño se reduce un poco por la defensa (lógica básica RPG)
-        int dañoReal = cantidad - (this.defensa / 5);
-        if (dañoReal < 5) dañoReal = 5; // Siempre recibe al menos algo de daño
-
-        this.hp -= dañoReal;
-        if (this.hp < 0) this.hp = 0;
+        // Variación aleatoria del 10% para que no sea siempre el mismo número
+        int variacion = (int) (Math.random() * 10) - 5;
+        int dañoFinal = (cantidad + variacion) - (this.defensa / 5);
+        // ... resto del código
     }
-
-    // --- GETTERS Y SETTERS (Necesarios para evolucionAleatoria) ---
 
     public String getNombre() { return nombre; }
 

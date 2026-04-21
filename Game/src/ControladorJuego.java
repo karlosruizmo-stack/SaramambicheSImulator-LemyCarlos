@@ -6,7 +6,7 @@ public class ControladorJuego {
     private Personaje jugador;
     private Personaje enemigoActual;
     private Vista vista;
-    private ControladorLogs controlLogs; // El controlador de archivos
+    private ControladorLogs controlLogs; 
 
     private ArrayList<Partida> historialPartidas; // El ArrayList donde cargamos todo
     private int recordPuntuacion;
@@ -49,7 +49,7 @@ public class ControladorJuego {
                 vista.mostrarMensaje("Récord absoluto: " + recordPuntuacion);
             }
         }
-        // GUARDAR 
+        // GUARDAR
         controlLogs.guardarEnArchivo(historialPartidas);
         vista.mostrarMensaje("Saliendo... Progreso guardado.");
     }
@@ -101,17 +101,26 @@ public class ControladorJuego {
     }
 
     private void ejecutarTurnoJugador() {
-        int danoBase = jugador.getFuerza();
-        if (contadorAtaquesBasicos >= 2) {
-            int danoEspecial = danoBase * 2;
-            enemigoActual.recibirDaño(danoEspecial);
-            vista.infoAtaque(jugador.getNombre(), "ESPECIAL", danoEspecial);
-            contadorAtaquesBasicos = 0;
-        } else {
-            enemigoActual.recibirDaño(danoBase);
-            vista.infoAtaque(jugador.getNombre(), "NORMAL", danoBase);
+        // Pedimos al usuario que elija
+        int accion = vista.menuCombate(contadorAtaquesBasicos);
+
+        if (accion == 1) {
+            // Ataque Normal
+            int dano = jugador.getFuerza();
+            enemigoActual.recibirDaño(dano);
+            vista.infoAtaque(jugador.getNombre(), "Ataque Normal", dano);
             contadorAtaquesBasicos++;
-            vista.mostrarCargaEspecial(contadorAtaquesBasicos);
+
+        } else if (accion == 2 && contadorAtaquesBasicos >= 2) {
+            // Ataque Especial (Solo si tiene carga)
+            int danoEspecial = jugador.getFuerza() * 2;
+            enemigoActual.recibirDaño(danoEspecial);
+            vista.infoAtaque(jugador.getNombre(), "Técnica Especial", danoEspecial);
+            contadorAtaquesBasicos = 0; // Reset
+
+        } else {
+            // Si elige el especial sin carga o una opción inválida
+            vista.mostrarMensaje("Fallo en la ejecución. Pierdes el ritmo.");
         }
     }
 
