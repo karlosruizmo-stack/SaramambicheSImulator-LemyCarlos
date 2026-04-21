@@ -45,13 +45,13 @@ public class ControladorJuego {
             if (op == 1) {
                 flujoCombate();
             } else if (op == 2) {
-                // Aquí usamos el ArrayList cargado para mostrar el historial
                 vista.mostrarLogs(historialPartidas);
                 vista.mostrarMensaje("Récord absoluto: " + recordPuntuacion);
             }
         }
-        // Al salir del programa, nos aseguramos de que todo esté guardado
+        // GUARDAR 
         controlLogs.guardarEnArchivo(historialPartidas);
+        vista.mostrarMensaje("Saliendo... Progreso guardado.");
     }
 
     private void flujoCombate() {
@@ -69,32 +69,35 @@ public class ControladorJuego {
 
         if (jugador.estaVivo()) {
             registrarVictoria();
+            // NO llamar a gestionarFinDePartida aquí si quieres que la partida continúe
         } else {
             vista.derrota();
-            gestionarFinDePartida(); // Al morir, guardamos la partida en el log
+            gestionarFinDePartida(); // SOLO se guarda cuando Baki muere
         }
     }
 
     private void gestionarFinDePartida() {
-        // Creamos un nuevo objeto Partida con los datos de la sesión actual
+        // Si quieres que el historial solo guarde las "Mejores Partidas" (Top 10)
+        // o simplemente que no sea un caos, podrías limpiar o filtrar.
+
         int nuevoId = historialPartidas.size() + 1;
         Partida partidaFinalizada = new Partida(nuevoId, puntuacionActual, LocalDateTime.now());
 
-        // Añadimos al ArrayList
         historialPartidas.add(partidaFinalizada);
 
-        // Actualizamos el archivo .txt inmediatamente
-        controlLogs.guardarEnArchivo(historialPartidas);
-
-        // Comprobamos si es nuevo récord
+        // Actualizamos el récord en memoria para la sesión actual
         if (puntuacionActual > recordPuntuacion) {
             recordPuntuacion = puntuacionActual;
-            vista.mostrarMensaje("¡NUEVO RÉCORD REGISTRADO!");
+            vista.mostrarMensaje("¡NUEVO RÉCORD REGISTRADO: " + recordPuntuacion + "!");
         }
 
-        // Reset para la próxima vez que el usuario quiera jugar en la misma sesión
+        // Guardamos todo el historial al archivo
+        controlLogs.guardarEnArchivo(historialPartidas);
+
+        //RESET
         puntuacionActual = 0;
-        jugador.setHp(150); // O resetear stats si lo prefieres
+        jugador.setHp(150);
+        jugador.setFuerza(35);
     }
 
     private void ejecutarTurnoJugador() {

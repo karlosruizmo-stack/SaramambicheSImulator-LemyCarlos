@@ -13,7 +13,7 @@ public class ControladorLogs {
 
         // de array a .txt
         public void guardarEnArchivo(ArrayList<Partida> p1) {
-            try (java.io.FileWriter fw = new java.io.FileWriter("Partida.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo
+            try (java.io.FileWriter fw = new java.io.FileWriter("partida.txt", false)) { // 'false' borra lo viejo y escribe lo nuevo
                 for (Partida l : p1) {
                     fw.write(l.getIdPartida() + "," + l.getPuntuación() + "," + l.getFecha() + "\n");
                 }
