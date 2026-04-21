@@ -18,10 +18,12 @@ public class Personaje {
     }
 
     public void recibirDaño(int cantidad) {
-        // Variación aleatoria del 10% para que no sea siempre el mismo número
-        int variacion = (int) (Math.random() * 10) - 5;
-        int dañoFinal = (cantidad + variacion) - (this.defensa / 5);
-        // ... resto del código
+        int dañoReal = cantidad - (this.defensa / 5);
+
+        if (dañoReal < 5) dañoReal = 5;
+
+        this.hp -= dañoReal;
+        if (this.hp < 0) this.hp = 0;
     }
 
     public String getNombre() { return nombre; }
