@@ -6,7 +6,7 @@ public class ControladorJuego {
     private Personaje jugador;
     private Personaje enemigoActual;
     private Vista vista;
-    private ControladorLogs controlLogs; // El controlador de archivos
+    private ControladorLogs controlLogs;
 
     private ArrayList<Partida> historialPartidas; // El ArrayList donde cargamos todo
     private int recordPuntuacion;
@@ -18,10 +18,9 @@ public class ControladorJuego {
         this.controlLogs = controlLogs;
         this.historialPartidas = new ArrayList<>();
 
-        // 1. Cargamos los datos del archivo al ArrayList al iniciar
+        // Cargar Controllogs --> Array historialPartidas
         this.controlLogs.cargarDesdeArchivo(this.historialPartidas);
-
-        // 2. Buscamos el récord dentro de ese ArrayList
+        // Registra la puntuacion más alta del array historialPartidas
         this.recordPuntuacion = calcularRecordDesdeLogs();
 
         this.jugador = new Personaje("Baki Hanma", 150, 35, 20);
@@ -38,6 +37,7 @@ public class ControladorJuego {
         return max;
     }
 
+    // VISTA mostrarMenuPrincipal --> Devuelve un valor tipo Int
     public void iniciarJuego() {
         int op = -1;
         while (op != 0) {
@@ -49,15 +49,14 @@ public class ControladorJuego {
                 vista.mostrarMensaje("Récord absoluto: " + recordPuntuacion);
             }
         }
-        // GUARDAR 
+        // GUARDAR
         controlLogs.guardarEnArchivo(historialPartidas);
         vista.mostrarMensaje("Saliendo... Progreso guardado.");
     }
-
+    // METODO PRINCIPAL(TURNO JUGADOR Y TURNO ENEMIGO) --> REGISTRAR VICTORIA -->FINDEPARTIDA();
     private void flujoCombate() {
         generarEnemigo();
         vista.mostrarInicioCombate(enemigoActual.getNombre());
-        contadorAtaquesBasicos = 0;
 
         while (jugador.estaVivo() && enemigoActual.estaVivo()) {
             ejecutarTurnoJugador();
@@ -69,16 +68,29 @@ public class ControladorJuego {
 
         if (jugador.estaVivo()) {
             registrarVictoria();
-            // NO llamar a gestionarFinDePartida aquí si quieres que la partida continúe
         } else {
             vista.derrota();
-            gestionarFinDePartida(); // SOLO se guarda cuando Baki muere
+            gestionarFinDePartida();
         }
     }
 
+    private void registrarVictoria() {
+        puntuacionActual += 100;
+        vista.victoria(100);
+
+        // Curación aleatoria (ejemplo: entre 20 y 50 de vida)
+        int curacion = (int) (Math.random() * 31) + 20;
+        int nuevaVida = jugador.getHp() + curacion;
+
+        if (nuevaVida > 150) nuevaVida = 150;
+
+        jugador.setHp(nuevaVida);
+        jugador.setFuerza(jugador.getFuerza() + 5);
+
+        vista.mostrarMensaje("Baki descansa. Recupera " + curacion + " HP. Nueva fuerza: " + jugador.getFuerza());
+    }
+
     private void gestionarFinDePartida() {
-        // Si quieres que el historial solo guarde las "Mejores Partidas" (Top 10)
-        // o simplemente que no sea un caos, podrías limpiar o filtrar.
 
         int nuevoId = historialPartidas.size() + 1;
         Partida partidaFinalizada = new Partida(nuevoId, puntuacionActual, LocalDateTime.now());
@@ -91,7 +103,7 @@ public class ControladorJuego {
             vista.mostrarMensaje("¡NUEVO RÉCORD REGISTRADO: " + recordPuntuacion + "!");
         }
 
-        // Guardamos todo el historial al archivo
+        // Guardamos todo el historial
         controlLogs.guardarEnArchivo(historialPartidas);
 
         //RESET
@@ -101,17 +113,25 @@ public class ControladorJuego {
     }
 
     private void ejecutarTurnoJugador() {
-        int danoBase = jugador.getFuerza();
-        if (contadorAtaquesBasicos >= 2) {
-            int danoEspecial = danoBase * 2;
-            enemigoActual.recibirDaño(danoEspecial);
-            vista.infoAtaque(jugador.getNombre(), "ESPECIAL", danoEspecial);
-            contadorAtaquesBasicos = 0;
-        } else {
-            enemigoActual.recibirDaño(danoBase);
-            vista.infoAtaque(jugador.getNombre(), "NORMAL", danoBase);
+        // Pedimos al usuario que elija
+        int accion = vista.menuCombate(contadorAtaquesBasicos);
+
+        if (accion == 1) {
+            // Ataque Normal
+            int dano = jugador.getFuerza();
+            enemigoActual.recibirDaño(dano);
+            vista.infoAtaque(jugador.getNombre(), "Ataque Normal", dano);
             contadorAtaquesBasicos++;
-            vista.mostrarCargaEspecial(contadorAtaquesBasicos);
+
+        } else if (accion == 2 && contadorAtaquesBasicos >= 2) {
+            // Ataque Especial
+            int danoEspecial = jugador.getFuerza() * 2;
+            enemigoActual.recibirDaño(danoEspecial);
+            vista.infoAtaque(jugador.getNombre(), "Técnica Especial", danoEspecial);
+            contadorAtaquesBasicos = 0; // Reset
+
+        } else {
+            vista.mostrarMensaje("Fallo en la ejecución. Pierdes el ritmo.");
         }
     }
 
@@ -122,13 +142,13 @@ public class ControladorJuego {
 
     public void generarEnemigo() {
         int nivel = (puntuacionActual / 100) + 1;
-        this.enemigoActual = new Personaje("Rival", 80 + (nivel * 10), 15 + (nivel * 5), 10 + nivel);
-    }
+        String[] nombres = {"Jack Hammer", "Doppo Orochi", "Retsu Kaioh", "Hanayama", "Oliva"};
+        String nombreAleatorio = nombres[(int) (Math.random() * nombres.length)];
 
-    private void registrarVictoria() {
-        puntuacionActual += 100;
-        vista.victoria(100);
-        jugador.setFuerza(jugador.getFuerza() + 5);
-        jugador.setHp(jugador.getHp() + 25);
+        int hp = 80 + (nivel * 10);
+        int str = 15 + (nivel * 5);
+        int def = 10 + (nivel * 2);
+
+        this.enemigoActual = new Personaje(nombreAleatorio, hp, str, def);
     }
 }

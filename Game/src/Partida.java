@@ -3,7 +3,6 @@ import java.time.LocalDateTime;
 public class Partida {
     private int idPartida;
     private int puntuación;
-    private String resultado; // Ej: "Victoria", "Derrota"
     private LocalDateTime fecha;
 
     public Partida(int idPartida, int puntuación, LocalDateTime fecha) {
