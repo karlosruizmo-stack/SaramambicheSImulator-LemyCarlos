@@ -1,17 +1,27 @@
 import java.io.*;
 
 public class ControladorPers {
+    private Vista vista;
     private Personaje baki;
     private int recordPuntuacion;
     private int puntuacionActual; // Puntos acumulados en la sesión de juego
     private String rutaRecord = "record.txt";
 
-    public ControladorPers() {
+    public ControladorPers(Vista vista) {
         // Establecemos las stats predefinidas con las que comienza el jugador
         this.baki = new Personaje("Baki Hanma", 150, 30,);
         this.recordPuntuacion = cargarRecord();
         this.puntuacionActual = 0;
     }
+
+    public ControladorPers(Vista vista) {
+        this.vista = vista;
+        this.baki = baki;
+        this.recordPuntuacion = recordPuntuacion;
+        this.puntuacionActual = puntuacionActual;
+        this.rutaRecord = rutaRecord;
+    }
+
     public void registrarVictoria() {
         this.puntuacionActual += 100;
         System.out.println("Victoria aplastante +100 puntos.");
