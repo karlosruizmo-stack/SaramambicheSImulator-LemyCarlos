@@ -128,7 +128,7 @@ public class ControladorJuego {
             int danoEspecial = jugador.getFuerza() * 2;
             enemigoActual.recibirDaño(danoEspecial);
             vista.infoAtaque(jugador.getNombre(), "Técnica Especial", danoEspecial);
-            contadorAtaquesBasicos = 0; // Reset
+            contadorAtaquesBasicos -= 2; // Reset
 
         } else {
             vista.mostrarMensaje("Fallo en la ejecución. Pierdes el ritmo.");
