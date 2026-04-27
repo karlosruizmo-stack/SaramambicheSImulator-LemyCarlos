@@ -19,18 +19,6 @@ public class Vista {
     public void mostrarInicioCombate(String oponente) {
         System.out.println("\n[!] ¡Un saramambiche " + oponente + " ha aparecido!");
     }
-    public int elegirAccion(int cargaEspecial) {
-        System.out.println("\n--- TURNO DE BAKI ---");
-        System.out.println("1. Ataque Normal");
-        if (cargaEspecial >= 2) {
-            System.out.println("2. ¡ATAQUE ESPECIAL DISPONIBLE!");
-        } else {
-            System.out.println("2. [Bloqueado] Cargar Especial (" + cargaEspecial + "/2)");
-        }
-        System.out.println("3. Defenderse (Reduce daño del próximo turno)");
-        System.out.print("Elige tu movimiento: ");
-        return sc.nextInt();
-    }
 
     public void mostrarEstado(Personaje p1, Personaje p2) {
         System.out.println("\n----------------------------------");
@@ -42,10 +30,6 @@ public class Vista {
     public void infoAtaque(String atacante, String tipo, int dano) {
         String decoracion = tipo.equals("ESPECIAL") ? " [CRÍTICO] " : "->";
         System.out.println(decoracion + " " + atacante + " usa " + tipo + " y causa " + dano + " de daño.");
-    }
-
-    public void mostrarCargaEspecial(int contador) {
-        System.out.println("[Sistema] Carga de especial: " + contador + "/2");
     }
 
     public void victoria(int puntos) {

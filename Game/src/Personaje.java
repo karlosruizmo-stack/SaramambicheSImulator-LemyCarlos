@@ -34,8 +34,6 @@ public class Personaje {
     public int getFuerza() { return fuerza; }
     public void setFuerza(int fuerza) { this.fuerza = fuerza; }
 
-    public int getDefensa() { return defensa; }
-    public void setDefensa(int defensa) { this.defensa = defensa; }
 
     @Override
     public String toString() {

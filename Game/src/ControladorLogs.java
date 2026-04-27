@@ -21,8 +21,8 @@ public class ControladorLogs {
                 System.out.println("Error al guardar: " + e.getMessage());
             }
         }
-        // de .txt al array
 
+        // de .txt al array
         public void cargarDesdeArchivo(ArrayList<Partida> p2) {
             File archivo = new File("partida.txt");
             if (!archivo.exists()) return;

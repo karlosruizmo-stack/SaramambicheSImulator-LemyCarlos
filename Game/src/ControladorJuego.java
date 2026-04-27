@@ -53,7 +53,7 @@ public class ControladorJuego {
         controlLogs.guardarEnArchivo(historialPartidas);
         vista.mostrarMensaje("Saliendo... Progreso guardado.");
     }
-    // METODO PRINCIPAL(TURNO JUGADOR Y TURNO ENEMIGO) --> REGISTRAR VICTORIA -->FINDEPARTIDA();
+    // METODO PRINCIPAL(TURNO JUGADOR Y TURNO ENEMIGO) --> REGISTRAR VICTORIA -->FIN DE PARTIDA();
     private void flujoCombate() {
         generarEnemigo();
         vista.mostrarInicioCombate(enemigoActual.getNombre());
